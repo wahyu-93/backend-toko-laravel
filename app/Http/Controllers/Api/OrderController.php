@@ -26,7 +26,7 @@ class OrderController extends Controller
 
     public function show($snap_token)
     {
-        $invoices = Invoice::where('customer_id', auth()->guard('api')->user()->id)->where('snap_token', $snap_token)->latest()->get();
+        $invoices = Invoice::with('orders')->where('customer_id', auth()->guard('api')->user()->id)->where('snap_token', $snap_token)->latest()->first();
 
         return response()->json([
             'success'   => true,
